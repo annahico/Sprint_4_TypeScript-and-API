@@ -1,0 +1,23 @@
+{
+  "name": "sprint_4_typescript-and-api",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/annahico/Sprint_4_TypeScript-and-API#readme",
+  "bugs": {
+    "url": "https://github.com/annahico/Sprint_4_TypeScript-and-API/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annahico/Sprint_4_TypeScript-and-API.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
