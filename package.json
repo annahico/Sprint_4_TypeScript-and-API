@@ -11,11 +11,18 @@
     "url": "git+https://github.com/annahico/Sprint_4_TypeScript-and-API.git"
   },
   "license": "ISC",
-  "author": "",
+  "author": "sukinana",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm.cmd run compile",
+    "pretest": "npm.cmd run compile",
+    "posttest": "npm.cmd run lint"
   },
   "devDependencies": {
     "ts-node": "^10.9.2"

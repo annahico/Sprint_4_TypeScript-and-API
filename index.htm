@@ -9,26 +9,26 @@
 </head>
 
 <body>
-  <main class="">
+  <main class="main container-sm">
     <div class="" id="text1">
       <span class=""> Good morning! Let's start ther day with a smile </span>
     </div>
 
-    <p class="loading" id="joke"> Loading joke... </p>
+    <p class="card-text text-center" id="joke"> Loading joke... </p>
 
-    <div id="buttons-score" class="">
-      <button data-score="1" class="">😓</button>
-      <button data-score="2" class="">😐</button>
-      <button data-score="3" class="">😆</button>
+    <div id="buttons-score" class="text-center">
+      <button data-score="1" class="score-btn" data-score">😓</button>
+      <button data-score="2" class="score-btn" data-score">😐</button>
+      <button data-score="3" class="score-btn" data-score">😆</button>
     </div>
 
-    <button id="next-joke" class=""> Next Joke ➡️</button>
+    <button id="next-joke" class="btnNext"> Next Joke ➡️</button>
 
     <section id="weather-container" class="">
-      <div class="">
-        <p class="">Barcelona</p>
-        <canvas id="weather-canvas" class=""></canvas>
-      </div>
+       <div class="align-self-start" id="weather">
+            <img src="" alt="weather icon">
+            <span class="temperature"></span>
+        </div>
 
       <div>
         <p id="weather" class=""> Loading time... </p>
