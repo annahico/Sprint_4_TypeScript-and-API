@@ -9,32 +9,32 @@
 </head>
 
 <body>
-  <main class="main container-sm">
-    <div class="" id="text1">
-      <span class=""> Good morning! Let's start ther day with a smile </span>
+    <div class="container">
+        <header>
+            <h1>Daily Jokes</h1>
+            <div id="weather-info">Loading weather...</div>
+        </header>
+        
+        <main>
+            <div class="joke-card">
+                <div id="joke-text">Loading joke...</div>
+                
+                <div class="rating">
+                    <p>Rate this joke:</p>
+                    <div class="score-buttons">
+                        <button id="score-1" class="score-btn">😞</button>
+                        <button id="score-2" class="score-btn">😐</button>
+                        <button id="score-3" class="score-btn">😊</button>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button id="next-joke-btn">Next Joke</button>
+                    <button id="show-report-btn">Show Report</button>
+                </div>
+            </div>
+        </main>
     </div>
-
-    <p class="card-text text-center" id="joke"> Loading joke... </p>
-
-    <div id="buttons-score" class="text-center">
-      <button data-score="1" class="score-btn" data-score">😓</button>
-      <button data-score="2" class="score-btn" data-score">😐</button>
-      <button data-score="3" class="score-btn" data-score">😆</button>
-    </div>
-
-    <button id="next-joke" class="btnNext"> Next Joke ➡️</button>
-
-    <section id="weather-container" class="">
-       <div class="align-self-start" id="weather">
-            <img src="" alt="weather icon">
-            <span class="temperature"></span>
-        </div>
-
-      <div>
-        <p id="weather" class=""> Loading time... </p>
-      </div>
-    </section>
-  </main>
 
   <script src="./src/scripts/api.ts"></script>
   <script src="./src/scripts/main.ts"></script>

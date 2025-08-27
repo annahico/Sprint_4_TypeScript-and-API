@@ -1,8 +1,4 @@
-import { getJoke, getWeather } from './scripts/api.js';
-import { setupEvents } from './scripts/events.js';
+import { initializeApp } from './scripts/main';
 
-document.addEventListener('DOMContentLoaded', () => {
-  setupEvents();
-  getJoke();
-  getWeather();
-});
+// Exporta la funció per a ús en el navegador
+(window as any).initializeApp = initializeApp;

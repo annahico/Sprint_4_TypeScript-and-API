@@ -1,45 +1,61 @@
-import { showJoke, showError, showWeather } from "./dom.js";
-const WEATHER_API_KEY = '2beaf4e1b7064d41a3484535251905'
+import { API_PARAMS, JokeAPI } from '../config/api_parameters.js';
 
-interface ApiConfig {
-  url: string;
-  header: Record<string, string>;
-}
-export interface Report {
+export interface Joke {
+  id: string;
   joke: string;
-  score: number;
-  date: string;
+  rating?: number;
+  date?: string;
 }
 
-export const joke: ApiConfig = {
-  url: 'https://icanhazdadjoke.com/',
-  header: { Accept: 'application/json' },
-};
+export interface WeatherData {
+  temperature: number;
+  weathercode: number;
+  time: string;
+}
 
-export let currentJoke: string
-export async function getJoke(): Promise<void> {
+export async function fetchJoke(apiType: JokeAPI): Promise<Joke> {
   try {
-    const response = await fetch(joke.url, {
-      headers: joke.header
+    const apiConfig = API_PARAMS[apiType];
+    const response = await fetch(apiType === 'DAD_JOKE' ? apiConfig.url : `${apiConfig.url}`, {
+      headers: apiConfig.headers
     });
-    const data = await response.json();
-
-    console.log("Received joke:", data.joke);
-    currentJoke = data.joke;
-    showJoke(currentJoke);
     
+    if (!response.ok) {
+      throw new Error(`Error fetching joke: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    return {
+      id: data.id || Math.random().toString(36).substring(7),
+      joke: data.joke || data.value
+    };
   } catch (error) {
-    console.error('Error getting joke:', error);
-    showError('Error loading joke');
+    console.error('Error fetching joke:', error);
+    throw error;
   }
 }
 
-export async function getWeather(): Promise<void> {
-  const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=Barcelona&aqi=no`)
-  const data = await response.json();
-  const icon = 'https:' + data.current.condition.icon;
-  const temperature = data.current.temp_c;
-
-  console.log("Weather received:", data.current);
-  showWeather(icon, temperature.toString())
+export async function fetchWeather(): Promise<WeatherData> {
+  try {
+    const apiConfig = API_PARAMS.WEATHER;
+    const url = `${apiConfig.url}?${new URLSearchParams(apiConfig.params as any).toString()}`;
+    
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`Error fetching weather: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    return {
+      temperature: data.current_weather.temperature,
+      weathercode: data.current_weather.weathercode,
+      time: data.current_weather.time
+    };
+  } catch (error) {
+    console.error('Error fetching weather:', error);
+    throw error;
+  }
 }
