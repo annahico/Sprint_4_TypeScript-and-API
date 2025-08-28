@@ -1,4 +1,4 @@
-import { API_PARAMS, JokeAPI } from '../config/api_parameters.js';
+import { API_PARAMS, JokeAPI } from '../config/api_parameters';
 
 export interface Joke {
   id: string;
@@ -16,7 +16,7 @@ export interface WeatherData {
 export async function fetchJoke(apiType: JokeAPI): Promise<Joke> {
   try {
     const apiConfig = API_PARAMS[apiType];
-    const response = await fetch(apiType === 'DAD_JOKE' ? apiConfig.url : `${apiConfig.url}`, {
+    const response = await fetch(apiConfig.url, {
       headers: apiConfig.headers
     });
     

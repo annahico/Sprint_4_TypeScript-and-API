@@ -1,6 +1,13 @@
 import { fetchJoke, Joke } from './api';
 import { updateJokeElement, updateScoreButtons, showNotification } from './dom';
-import { reportAcudits, currentJoke, currentScore } from './main';
+import { 
+  setCurrentScore, 
+  setCurrentJoke, 
+  addToReport, 
+  getCurrentJoke, 
+  getCurrentScore,
+  getReportAcudits 
+} from './main';
 import { JokeAPI } from '../config/api_parameters.js';
 
 export function initializeEventListeners(): void {
@@ -27,6 +34,9 @@ export function initializeEventListeners(): void {
 
 export async function handleNextJoke(): Promise<void> {
   try {
+    const currentJoke = getCurrentJoke();
+    const currentScore = getCurrentScore();
+    
     // Save current joke with rating if exists
     if (currentJoke && currentScore !== null) {
       const jokeWithRating = {
@@ -34,13 +44,13 @@ export async function handleNextJoke(): Promise<void> {
         score: currentScore,
         date: new Date().toISOString()
       };
-      reportAcudits.push(jokeWithRating);
-      console.log('Report updated:', reportAcudits);
+      addToReport(jokeWithRating);
+      console.log('Report updated:', getReportAcudits());
       showNotification('Rating saved!');
     }
     
-    //  comença sense puntuació
-    currentScore = null;
+    // comença sense puntuació
+    setCurrentScore(null);
     updateScoreButtons(null);
     
     // Alterna entre les dues APIs d'acudits
@@ -48,7 +58,7 @@ export async function handleNextJoke(): Promise<void> {
     
     // Carrega un nou acudit
     const newJoke = await fetchJoke(apiType);
-    currentJoke = newJoke;
+    setCurrentJoke(newJoke);
     updateJokeElement(newJoke);
     
   } catch (error) {
@@ -58,12 +68,13 @@ export async function handleNextJoke(): Promise<void> {
 }
 
 export function handleScoreClick(score: number): void {
-  currentScore = score;
+  setCurrentScore(score);
   updateScoreButtons(score);
   showNotification(`Rated ${score} stars!`);
 }
 
 export function handleShowReport(): void {
-  console.log('Current report:', reportAcudits);
-  alert(`Total jokes rated: ${reportAcudits.length}\nView full report in console.`);
+  const report = getReportAcudits();
+  console.log('Current report:', report);
+  alert(`Total jokes rated: ${report.length}\nView full report in console.`);
 }

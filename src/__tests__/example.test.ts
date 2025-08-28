@@ -1,5 +1,5 @@
 import { fetchJoke } from '../scripts/api';
-import { getWeatherDescription } from '../scripts//dom';
+import { getWeatherDescription } from '../scripts/dom';
 
 // Mock global fetch
 global.fetch = jest.fn();

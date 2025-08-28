@@ -1,11 +1,37 @@
 import { fetchJoke, fetchWeather, Joke } from './api';
 import { JokeAPI } from '../config/api_parameters.js';
-import { updateWeatherElement } from './dom';
+import { updateWeatherElement, updateJokeElement } from './dom';
 import { initializeEventListeners } from './events';
 
-export let reportAcudits: Array<Joke & { score: number; date: string }> = [];
-export let currentJoke: Joke | null = null;
-export let currentScore: number | null = null;
+// estat global
+let reportAcudits: Array<Joke & { score: number; date: string }> = [];
+let currentJoke: Joke | null = null;
+let currentScore: number | null = null;
+
+// funcions per gestionar l'estat global
+export function setCurrentScore(score: number | null): void {
+  currentScore = score;
+}
+
+export function setCurrentJoke(joke: Joke | null): void {
+  currentJoke = joke;
+}
+
+export function addToReport(joke: Joke & { score: number; date: string }): void {
+  reportAcudits.push(joke);
+}
+
+export function getReportAcudits(): Array<Joke & { score: number; date: string }> {
+  return [...reportAcudits]; // torna una còpia per evitar manipulacions externes
+}
+
+export function getCurrentJoke(): Joke | null {
+  return currentJoke;
+}
+
+export function getCurrentScore(): number | null {
+  return currentScore;
+}
 
 export async function initializeApp(): Promise<void> {
   try {
@@ -17,7 +43,7 @@ export async function initializeApp(): Promise<void> {
     // Carrega el primer acudit
     const apiType: JokeAPI = 'DAD_JOKE'; // comença amb els acudits
     const joke = await fetchJoke(apiType);
-    currentJoke = joke;
+    setCurrentJoke(joke);
     updateJokeElement(joke);
     
   } catch (error) {
@@ -26,13 +52,9 @@ export async function initializeApp(): Promise<void> {
   }
 }
 
-//inicia l'aplicació quan el DOM està carregat
+// inicia l'aplicació quan el DOM està carregat
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializeApp);
 } else {
   initializeApp();
-}
-
-function updateJokeElement(joke: Joke) {
-    throw new Error('Function not implemented.');
 }
